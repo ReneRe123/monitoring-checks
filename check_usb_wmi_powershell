@@ -1,5 +1,6 @@
 Param (
-    [string]$VAR
+    [Parameter(Mandatory=$true)]
+    [String]$VAR
 )
 $exitcode = 0
 if (Get-WmiObject Win32_USBControllerDevice | ForEach-Object { [wmi]$_.dependent } | select-Object description,
