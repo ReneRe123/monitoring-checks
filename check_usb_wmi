@@ -1,0 +1,15 @@
+Param (
+    [string]$VAR
+)
+$exitcode = 0
+if (Get-WmiObject Win32_USBControllerDevice | ForEach-Object { [wmi]$_.dependent } | select-Object description,
+deviceid | Where {$_.description -eq $VAR}) {
+  $out = "OK - $VAR USB-Gerät verfügbar."
+  $exitcode = 0
+}
+else {
+  $out = "CRITICAL - $VAR USB-Gerät nicht verfügbar!"
+  $exitcode = 2
+}
+Write-Host "$out"
+exit $exitcode
